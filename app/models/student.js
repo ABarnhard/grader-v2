@@ -6,8 +6,6 @@ function Student(obj){
   this.name = obj.name;
   this.color = obj.color;
   this.tests = [];
-  this.onHonorRoll = checkHonorRoll(this);
-  this.isSuspended = checkSuspended(this);
 }
 
 Object.defineProperty(Student, 'collection', {
@@ -19,7 +17,6 @@ Student.prototype.avg = function(){
 
   var sum = this.tests.reduce(function(a,b){return a+b;});
   return sum/this.tests.length;
-
 };
 
 Student.prototype.letter = function(){
@@ -39,6 +36,17 @@ Student.prototype.letter = function(){
   }
 };
 
+Student.prototype.onHonorRoll = function(){
+  if(!this.tests.length){return false;}
+  return this.avg() > 95;
+};
+
+Student.prototype.isSuspended = function(){
+  if(!this.tests.length){return false;}
+  var numFailed = this.tests.reduce(function(a, b){return a += (b < 60) ? 1 : 0;}, 0);
+  return numFailed >= 3;
+};
+
 Student.prototype.save = function(cb){
   Student.collection.save(this, cb);
 };
@@ -51,13 +59,3 @@ function reProto(obj){
   return _.create(Student.prototype, obj);
 }
 
-function checkHonorRoll(me){
-  if(!me.tests.length){return false;}
-  return me.avg() > 95;
-}
-
-function checkSuspended(me){
-  if(!me.tests.length){return false;}
-  var numFailed = me.tests.reduce(function(a, b){return a += (b < 60) ? 1 : 0;}, 0);
-  return numFailed >= 3;
-}
