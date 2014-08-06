@@ -1,13 +1,20 @@
 /* jshint expr: true */
-/* global describe, it */
+/* global describe, it, before*/
 'use strict';
 
 var expect = require('chai').expect;
+var Mongo = require('mongodb');
+var connect = require('../../app/lib/mongodb');
 var Student = require('../../app/models/student');
 
 var s1;
 
 describe('Student', function(){
+  before(function(done){
+    connect('grader2-test', function(){
+      done();
+    });
+  });
   describe('Constructor', function(){
     it('should create a new instance of Student with properties', function(){
       s1 = new Student({name:'Jim Jones', color:'blue'});
@@ -53,5 +60,15 @@ describe('Student', function(){
       expect(s1.letter()).to.equal('F');
     });
   });
+  describe('#save', function(){
+    it('should save Student into database', function(done){
+      var bob = new Student({name:'Bob', color:'green'});
+      bob.save(function(){
+        expect(bob._id).to.be.instanceof(Mongo.ObjectID);
+        done();
+      });
+    });
+  });
+  describe('#addTest', function(){});
 
 });

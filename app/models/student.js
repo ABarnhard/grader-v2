@@ -10,6 +10,10 @@ function Student(obj){
   this.isSuspended = checkSuspended(this);
 }
 
+Object.defineProperty(Student, 'collection', {
+  get: function(){return global.mongodb.collection('students');}
+});
+
 Student.prototype.avg = function(){
   if(!this.tests.length){return 0;}
 
@@ -35,6 +39,10 @@ Student.prototype.letter = function(){
   }
 };
 
+Student.prototype.save = function(cb){
+  Student.collection.save(this, cb);
+};
+
 module.exports = Student;
 
 // Helper Functions
@@ -45,10 +53,11 @@ function reProto(obj){
 
 function checkHonorRoll(me){
   if(!me.tests.length){return false;}
-
+  return me.avg() > 95;
 }
 
 function checkSuspended(me){
   if(!me.tests.length){return false;}
-
+  var numFailed = me.tests.reduce(function(a, b){return a += (b < 60) ? 1 : 0;}, 0);
+  return numFailed >= 3;
 }
