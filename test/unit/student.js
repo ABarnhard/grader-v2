@@ -26,5 +26,32 @@ describe('Student', function(){
       expect(s1.avg()).to.be.closeTo(75, 0.1);
     });
   });
+  describe('#letter', function(){
+    it('should return A', function(){
+      s1 = new Student({name:'Jim Jones', color:'blue'});
+      s1.tests = [95];
+      expect(s1.letter()).to.equal('A');
+    });
+    it('should return B', function(){
+      s1 = new Student({name:'Jim Jones', color:'blue'});
+      s1.tests = [85];
+      expect(s1.letter()).to.equal('B');
+    });
+    it('should return C', function(){
+      s1 = new Student({name:'Jim Jones', color:'blue'});
+      s1.tests = [75];
+      expect(s1.letter()).to.equal('C');
+    });
+    it('should return D', function(){
+      s1 = new Student({name:'Jim Jones', color:'blue'});
+      s1.tests = [65];
+      expect(s1.letter()).to.equal('D');
+    });
+    it('should return F', function(){
+      s1 = new Student({name:'Jim Jones', color:'blue'});
+      s1.tests = [55];
+      expect(s1.letter()).to.equal('F');
+    });
+  });
 
 });

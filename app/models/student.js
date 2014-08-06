@@ -18,6 +18,23 @@ Student.prototype.avg = function(){
 
 };
 
+Student.prototype.letter = function(){
+  if(!this.tests.length){return 'N/A';}
+
+  var avg = this.avg();
+  if(avg < 60){
+    return 'F';
+  }else if(avg < 70){
+    return 'D';
+  }else if(avg < 80){
+    return 'C';
+  }else if(avg < 90){
+    return 'B';
+  }else{
+    return 'A';
+  }
+};
+
 module.exports = Student;
 
 // Helper Functions
