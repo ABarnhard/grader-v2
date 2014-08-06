@@ -106,6 +106,23 @@ describe('Student', function(){
       });
     });
   });
+  describe('#getColor', function(){
+    it('should return blue for numbers 90-100', function(){
+      expect(s1.getColor(95)).to.equal('blue');
+    });
+    it('should return green for numbers 80-89', function(){
+      expect(s1.getColor(85)).to.equal('green');
+    });
+    it('should return orange for numbers 70-79', function(){
+      expect(s1.getColor(75)).to.equal('orange');
+    });
+    it('should return red for numbers 60-69', function(){
+      expect(s1.getColor(65)).to.equal('red');
+    });
+    it('should return brown for numbers less than 60', function(){
+      expect(s1.getColor(55)).to.equal('brown');
+    });
+  });
   describe('.findAll', function(){
     it('should find all students in database', function(done){
       Student.findAll(function(students){

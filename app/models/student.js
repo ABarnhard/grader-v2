@@ -57,6 +57,20 @@ Student.prototype.addTest = function(obj, cb){
   this.save(cb);
 };
 
+Student.prototype.getColor = function(num){
+  if(num < 60){
+    return 'brown';
+  }else if(num < 70){
+    return 'red';
+  }else if(num < 80){
+    return 'orange';
+  }else if(num < 90){
+    return 'green';
+  }else{
+    return 'blue';
+  }
+};
+
 Student.findAll = function(cb){
   Student.collection.find().toArray(function(err, objects){
     var students = objects.map(function(obj){return reProto(obj);});
