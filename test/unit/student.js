@@ -7,7 +7,7 @@ var Mongo = require('mongodb');
 var connect = require('../../app/lib/mongodb');
 var Student = require('../../app/models/student');
 
-var s1;
+var s1, s2, s3;
 
 describe('Student', function(){
   before(function(done){
@@ -18,7 +18,16 @@ describe('Student', function(){
   beforeEach(function(done){
     Student.collection.remove(function(){
       s1 = new Student({name:'Jim Jones', color:'blue'});
-      done();
+      s2 = new Student({name:'Bob Boberson', color:'red'});
+      s3 = new Student({name:'Tom Tomson', color:'orange'});
+
+      s1.save(function(){
+        s2.save(function(){
+          s3.save(function(){
+            done();
+          });
+        });
+      });
     });
   });
   describe('Constructor', function(){
@@ -86,6 +95,33 @@ describe('Student', function(){
       });
     });
   });
-  describe('#addTest', function(){});
-
+  describe('#addTest', function(){
+    it('add test score to record in database', function(done){
+      s1.addTest({score:'90.3'}, function(){
+        Student.findById(s1._id.toString(), function(student){
+          expect(student.tests).to.have.length(1);
+          expect(student.tests[0]).to.be.closeTo(90.3, 0.1);
+          done();
+        });
+      });
+    });
+  });
+  describe('.findAll', function(){
+    it('should find all students in database', function(done){
+      Student.findAll(function(students){
+        expect(students).to.have.length(3);
+        expect(students[0]).to.respondTo('avg');
+        done();
+      });
+    });
+  });
+  describe('.findById', function(){
+    it('should return a student record by it\'s ID from database', function(done){
+      Student.findById(s1._id.toString(), function(student){
+        expect(student).to.eql(s1);
+        expect(student).to.respondTo('avg');
+        done();
+      });
+    });
+  });
 });

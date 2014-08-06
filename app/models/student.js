@@ -1,6 +1,7 @@
 'use strict';
 
 var _ = require('lodash');
+var Mongo = require('mongodb');
 
 function Student(obj){
   this.name = obj.name;
@@ -49,6 +50,25 @@ Student.prototype.isSuspended = function(){
 
 Student.prototype.save = function(cb){
   Student.collection.save(this, cb);
+};
+
+Student.prototype.addTest = function(obj, cb){
+  this.tests.push(obj.score * 1);
+  this.save(cb);
+};
+
+Student.findAll = function(cb){
+  Student.collection.find().toArray(function(err, objects){
+    var students = objects.map(function(obj){return reProto(obj);});
+    cb(students);
+  });
+};
+
+Student.findById = function(id, cb){
+  id = Mongo.ObjectID(id);
+  Student.collection.findOne({_id:id}, function(err, object){
+    cb(reProto(object));
+  });
 };
 
 module.exports = Student;
