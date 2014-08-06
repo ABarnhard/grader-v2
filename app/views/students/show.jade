@@ -1,0 +1,27 @@
+extends ../shared/template
+block content
+  h1 View Student
+  table
+    tbody
+      tr
+        td(colspan='2')= student.name
+      tr
+        td Avg:
+        td= student.avg().toFixed(2)
+      tr
+        td Letter
+        td= student.letter()
+      tr
+        td Suspended
+        td= student.isSuspended()
+      tr
+        td Honor Roll
+        td= student.onHonorRoll()
+      tr
+        td(colspan='2')
+          form(method='get', action='/students/#{student._id}/test')
+            button Add Test
+  #test
+    each test in student.tests
+      .testscore(style='height:#{test}px;background-color:#{student.getColor(test)};')
+

@@ -1,0 +1,26 @@
+extends ../shared/template
+block content
+  h1 View students
+  table#students
+    thead
+      tr
+        th Name
+        th Average
+        th Letter
+        th Suspended
+        th Honor Roll
+    tbody
+      each student in students
+        tr
+          td(style="background-color:#{student.color}"): a(href="/students/#{student._id}")= student.name
+          td(style="background-color:#{student.getColor(student.avg())};")= student.avg().toFixed(1)
+          td(style="background-color:#{student.getColor(student.avg())};")= student.letter()
+          -console.log(student.isSuspended);
+          if student.isSuspended()
+            td(style="background-color:red") Yes
+          else
+            td(style="background-color:green") No
+          if student.onHonorRoll()
+            td(style="background-color:green") Yes
+          else
+            td(style="background-color:red") No

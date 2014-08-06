@@ -1,0 +1,8 @@
+extends ../shared/template
+block content
+  h1 Adding test score
+  form(method='post' action='/students/#{id}/test')
+    label Score
+    input(type="number", name="score")
+    button Add test
+

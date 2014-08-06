@@ -1,0 +1,25 @@
+nav ul {
+  list-style-type: none;
+}
+
+nav li {
+  display: inline-block;
+  margin: 0 10px;
+}
+
+table {
+  text-align: center;
+  border-collapse: collapse;
+}
+
+td, th {
+  min-width: 50px;
+  padding: 5px;
+  border: 2px solid black;
+}
+
+.testscore {
+  width: 20px;
+  margin: 5px;
+  display: inline-block;
+}
