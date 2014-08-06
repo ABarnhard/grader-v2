@@ -14,6 +14,8 @@ name
 color
 tests
 --------------
+.collection
+--------------
 #onHonorRoll
 #isSuspended
 #avg
