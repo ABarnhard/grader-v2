@@ -19,4 +19,12 @@ describe('Student', function(){
       expect(s1.isSuspended).to.be.false;
     });
   });
+  describe('#avg', function(){
+    it('should return the average for all tests taken', function(){
+      s1 = new Student({name:'Jim Jones', color:'blue'});
+      s1.tests = [95, 85, 75, 65, 55];
+      expect(s1.avg()).to.be.closeTo(75, 0.1);
+    });
+  });
+
 });
