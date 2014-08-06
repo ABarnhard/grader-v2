@@ -9,15 +9,21 @@ Grader-v2 is a simple LMS system for tracking student performance
 ### Models
 ```
 Student
+--------------
 name
 color
+tests
+--------------
 #onHonorRoll
 #isSuspended
-#average
+#avg
 #letter
 #save
 #addTest
-#color
+#getColor
+--------------
+.findAll
+.findById
 ```
 ### Features
 - Object Oriented
